@@ -44,7 +44,7 @@
 
                 <a class="navbar-brand" href="{{ url('/') }}">
 
-                    Laravel 10 User Roles and Permissions - ItSolutionStuff.com
+                 
 
                 </a>
 

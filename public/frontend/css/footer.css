@@ -1,0 +1,144 @@
+/* ======= FOOTER ======= */
+.market-footer {
+    background: #111;
+    color: #ccc;
+    font-family: Arial, sans-serif;
+    padding: 30px 5%;
+    line-height: 1.6;
+}
+
+.market-footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.market-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 200px;
+}
+
+.market-footer-logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.market-footer-logo h2 {
+    color: #fff;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.market-footer-logo p {
+    font-size: 12px;
+    color: #aaa;
+    margin: 0;
+}
+
+.market-footer-menu {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+    flex: 2 1 300px;
+}
+
+.market-footer-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.market-footer-menu li a:hover {
+    color: #ff6600;
+}
+
+.market-footer-newsletter {
+    background: #222;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    flex: 1 1 200px;
+}
+
+.market-footer-newsletter input {
+    border: none;
+    background: transparent;
+    color: #ccc;
+    outline: none;
+    padding: 6px 8px;
+    width: 100%;
+}
+
+.market-footer-newsletter button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.market-footer-newsletter button:hover {
+    color: #ff6600;
+}
+
+.market-footer-divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 20px 0;
+}
+
+.market-footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+    gap: 10px;
+}
+
+.market-footer-bottom p {
+    color: #aaa;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.market-footer-bottom a {
+    color: #ff6600;
+    text-decoration: none;
+}
+
+.market-footer-social {
+    margin-top: 10px;
+}
+
+.market-footer-social a {
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 50%;
+    padding: 8px;
+    margin: 0 3px;
+    transition: 0.3s;
+}
+
+.market-footer-social a:hover {
+    background: #ff6600;
+    border-color: #ff6600;
+}
+@media (max-width: 480px) {
+    .market-footer-bottom {
+   
+    justify-content: space-around;
+    
+}
+}

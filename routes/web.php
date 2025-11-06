@@ -10,7 +10,7 @@ use App\Http\Controllers\Frontend\ProductPageController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\ProductController as ControllersProductController;
 use App\Http\Controllers\RoleController;
 
 use App\Http\Controllers\UserController;
@@ -41,10 +41,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ControllersProductController::class);
     
     // Todo Routes
-    Route::redirect('/', '/admin/dashboard');
+   
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [TodoController::class, 'index'])->name('dashboard');
@@ -77,3 +77,8 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 });
+Route::get('/ ', function () {
+    return view('frontend.pages.home');
+});
+
+//  Route::redirect('/', '/admin/dashboard');

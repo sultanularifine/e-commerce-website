@@ -10,7 +10,7 @@
             </li>
 
             {{-- Users Menu --}}
-            @can('user-list')
+        @canany(['user-list', 'user-create', 'user-edit', 'user-delete'])
                 <li class="nav-item dropdown {{ Request::routeIs('users.*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fa-solid fa-users"></i> <span>Users</span></a>
                     <ul class="dropdown-menu">
