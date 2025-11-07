@@ -1,19 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\HomePageController;
-use App\Http\Controllers\Frontend\PageController;
-use App\Http\Controllers\Frontend\ProductPageController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController as ControllersProductController;
-use App\Http\Controllers\RoleController;
-
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TodoController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -41,10 +35,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-    Route::resource('products', ControllersProductController::class);
-    
+
+
     // Todo Routes
-   
+
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [TodoController::class, 'index'])->name('dashboard');
@@ -64,17 +58,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/update/{id}', [BlogController::class, 'update'])->name('blog.update');
             Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
         });
-        //Settings Controller
-        Route::prefix('settings')->group(function () {
-            Route::get('/basic', [SettingsController::class, 'basic'])->name('settings.basic');
-            Route::post('/basic', [SettingsController::class, 'store'])->name('settings.store');
-            Route::get('/banner', [SettingsController::class, 'banner'])->name('settings.banner');
-            Route::post('/banner', [SettingsController::class, 'heroImageStore'])->name('settings.imageStore');
-            Route::delete('/banner/{id}', [SettingsController::class, 'heroImageDestroy'])->name('settings.destroy');
-            Route::post('/contact/store', [SettingsController::class, 'contactStore'])->name('settings.contactStore');
-            Route::get('/contact/show', [SettingsController::class, 'contactShow'])->name('settings.contactShow');
-            Route::delete('/contacts/{id}', [SettingsController::class, 'contactDestroy'])->name('settings.contactDestroy');
-        });
+        Route::resource('products', ProductController::class);
+         Route::resource('categories', CategoryController::class);
+          Route::resource('brands', BrandController::class);
     });
 });
 Route::get('/ ', function () {

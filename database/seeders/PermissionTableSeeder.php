@@ -11,7 +11,7 @@ class PermissionTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-   public function run(): void
+    public function run(): void
     {
         $permissions = [
 
@@ -36,17 +36,26 @@ class PermissionTableSeeder extends Seeder
             'product-edit',
             'product-delete',
 
+            // ===== Brand Permissions =====
+            'brand-list',
+            'brand-create',
+            'brand-edit',
+            'brand-delete',
+
+            // ===== Category Permissions =====
+            'category-list',
+            'category-create',
+            'category-edit',
+            'category-delete',
+
             // ===== Blog Permissions =====
             'blog-list',
             'blog-create',
             'blog-edit',
             'blog-delete',
 
-            // ===== Settings Permissions =====
-            'settings-list',
-            'settings-edit',
-            'settings-delete',
         ];
+
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
