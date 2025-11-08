@@ -45,6 +45,7 @@ class ProductController extends Controller
             'gallery.*'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'meta_title'     => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
+            'status'          => 'required|boolean',
         ]);
 
         // Create product
@@ -59,6 +60,8 @@ class ProductController extends Controller
         $product->brand_id = $validated['brand_id'] ?? null;
         $product->meta_title = $validated['meta_title'] ?? null;
         $product->meta_description = $validated['meta_description'] ?? null;
+        $product->is_featured = $request->has('is_featured') ? 1 : 0;
+        $product->status = $validated['status'] ?? null;
 
         // Thumbnail upload
         if ($request->hasFile('thumbnail')) {
@@ -111,6 +114,7 @@ class ProductController extends Controller
             'gallery.*'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'meta_title'      => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
+            'status'          => 'required|boolean',
         ]);
 
         // Update product fields
@@ -124,6 +128,8 @@ class ProductController extends Controller
         $product->brand_id = $validated['brand_id'] ?? null;
         $product->meta_title = $validated['meta_title'] ?? null;
         $product->meta_description = $validated['meta_description'] ?? null;
+        $product->is_featured = $request->has('is_featured') ? 1 : 0;
+        $product->status = $validated['status'] ?? null;
 
         // Handle thumbnail
         if ($request->hasFile('thumbnail')) {

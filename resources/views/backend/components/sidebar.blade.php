@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('dashboard') }}">{{ config('app.name') }}</a>
+            <a href="{{ route('home') }}">{{ config('app.name') }}</a>
         </div>
 
         <ul class="sidebar-menu">
@@ -134,11 +134,54 @@
                 </li>
             @endcanany
 
+            <li class="menu-header">Home</li>
+            {{-- Header Settings --}}
+            @canany(['header-setting-list', 'header-settings-create', 'header-setting-edit',
+                'header-settings-delete'])
+                <li class="nav-item dropdown {{ Request::routeIs('header-settings.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fa-solid fa-header"></i>
+                        <span>Header Settings</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('header-setting-create')
+                            <li class="{{ Request::routeIs('header-settings.create') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('header-settings.create') }}">Add Header Item</a>
+                            </li>
+                        @endcan
+                        <li class="{{ Request::routeIs('header-settings.index') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('header-settings.index') }}">Header List</a>
+                        </li>
+                    </ul>
+                </li>
+            @endcanany
+
+            {{-- Sliders --}}
+            @canany(['slider-list', 'slider-create', 'slider-edit', 'slider-delete'])
+                <li class="nav-item dropdown {{ Request::routeIs('slider.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fa-solid fa-images"></i>
+                        <span>Sliders</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('slider-create')
+                            <li class="{{ Request::routeIs('slider.create') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('slider.create') }}">Add Slider</a>
+                            </li>
+                        @endcan
+                        <li class="{{ Request::routeIs('slider.index') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('slider.index') }}">Slider List</a>
+                        </li>
+                    </ul>
+                </li>
+            @endcanany
+
+
         </ul>
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">
             <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket"></i> Sign Out
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

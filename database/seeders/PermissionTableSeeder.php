@@ -53,7 +53,18 @@ class PermissionTableSeeder extends Seeder
             'blog-create',
             'blog-edit',
             'blog-delete',
-
+            
+             // ===== home Slider Permissions =====
+            'slider-list',
+            'slider-create',
+            'slider-edit',
+            'slider-delete',
+            
+            // ===== Header Permissions =====
+            'header-setting-list',
+            'header-setting-create',
+            'header-setting-edit',
+            'header-setting-delete',
         ];
 
 

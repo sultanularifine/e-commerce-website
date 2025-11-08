@@ -4,12 +4,14 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\HeaderSettingController;
 use App\Http\Controllers\Admin\TodoController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-
-
+use App\Http\Controllers\User\ProductPageController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\User\HomepageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -59,12 +61,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
         });
         Route::resource('products', ProductController::class);
-         Route::resource('categories', CategoryController::class);
-          Route::resource('brands', BrandController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('brands', BrandController::class);
+        Route::resource('slider', SliderController::class);
+        Route::resource('header-settings', HeaderSettingController::class);
     });
 });
-Route::get('/ ', function () {
-    return view('frontend.pages.home');
-});
-
-//  Route::redirect('/', '/admin/dashboard');
+Route::redirect('/', '/home');
+Route::get('/home', [HomepageController::class, 'index'])->name('home');
+Route::resource('product', ProductPageController::class);
+Route::get('/product/{slug}', [ProductPageController::class, 'show'])->name('products.show');
+Route::get('/cart', [ProductPageController::class, 'cart'])->name('cart');

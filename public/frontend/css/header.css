@@ -3,7 +3,9 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
-
+a{
+    text-decoration: none;
+}
 /* --- TOP BAR --- */
 .top-bar {
     display: flex;
