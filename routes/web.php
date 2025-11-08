@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
         });
         Route::resource('products', ProductController::class);
+        Route::post('/products/status/{product}', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
         Route::resource('categories', CategoryController::class);
         Route::resource('brands', BrandController::class);
         Route::resource('slider', SliderController::class);
@@ -65,5 +66,5 @@ Route::group(['middleware' => ['auth']], function () {
 Route::redirect('/', '/home');
 Route::get('/home', [HomepageController::class, 'index'])->name('home');
 Route::resource('product', ProductPageController::class);
-Route::get('/product/{slug}', [ProductPageController::class, 'show'])->name('products.show');
+Route::get('/product/{slug}', [ProductPageController::class, 'show'])->name('products.view');
 Route::get('/cart', [ProductPageController::class, 'cart'])->name('cart');

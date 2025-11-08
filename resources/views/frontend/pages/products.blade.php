@@ -310,6 +310,7 @@
                 <div class="featured-products">
                     <h3>FEATURED PRODUCTS</h3>
                     @foreach ($featuredProducts as $featured)
+                     <a href="{{ route('products.view', $featured->slug) }}" class="product-card" style="text-decoration: none; color: inherit;">
                         <div class="featured-item">
                             <img src="{{ asset($featured->thumbnail ?? 'images/default.jpg') }}"
                                 alt="{{ $featured->name }}">
@@ -321,7 +322,8 @@
                                     @endif
                                 </p>
                             </div>
-                        </div>
+                        </div>     
+                    </a>
                     @endforeach
                 </div>
             </aside>
@@ -342,7 +344,7 @@
 
                 <div class="product-grid">
                     @foreach ($products as $product)
-                        <a href="{{ route('products.show', $product->slug) }}" class="product-card"
+                        <a href="{{ route('products.view', $product->slug) }}" class="product-card"
                             style="text-decoration: none; color: inherit;">
                             <div class="product-image-container">
                                 @if ($product->discount_price)

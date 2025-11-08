@@ -419,7 +419,7 @@
 
         <div class="product-grid">
             @forelse ($newArrivals as $product)
-                <a href="{{ route('products.show', $product->slug) }}" class="product-card">
+                <a href="{{ route('products.view', $product->slug) }}" class="product-card">
                     <img src="{{ asset($product->thumbnail ?? 'images/default.jpg') }}" alt="{{ $product->name }}">
                     <h3>{{ Str::limit($product->name, 40) }}</h3>
                     <div class="stars">★★★★☆</div>

@@ -95,8 +95,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = \App\Models\Category::all();
-        $brands = \App\Models\Brand::all();
+        $categories = Category::all();
+        $brands = Brand::all();
         return view('backend.products.edit', compact('product', 'categories', 'brands'));
     }
 
@@ -178,14 +178,14 @@ class ProductController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         // Delete thumbnail
-        if ($product->thumbnail && Storage::disk('public')->exists($product->thumbnail)) {
-            Storage::disk('public')->delete($product->thumbnail);
+        if ($product->thumbnail && file_exists(public_path($product->thumbnail))) {
+            unlink(public_path($product->thumbnail));
         }
 
         // Delete gallery images
         foreach ($product->images as $image) {
-            if (Storage::disk('public')->exists($image->image)) {
-                Storage::disk('public')->delete($image->image);
+            if ($image->gallery && file_exists(public_path($image->gallery))) {
+                unlink(public_path($image->gallery));
             }
             $image->delete();
         }
@@ -196,11 +196,19 @@ class ProductController extends Controller
             ->with('success', 'Product deleted successfully.');
     }
 
-    /**
-     * Display the specified product.
-     */
     public function show(Product $product)
     {
         return view('backend.products.show', compact('product'));
     }
+    public function toggleStatus(Product $product)
+{
+    $product->status = !$product->status;
+    $product->save();
+
+    return response()->json([
+        'success' => true,
+        'status' => $product->status ? 'Active' : 'Inactive'
+    ]);
+}
+
 }
