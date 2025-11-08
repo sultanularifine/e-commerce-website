@@ -32,15 +32,10 @@ Auth::routes();
 
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
 Route::group(['middleware' => ['auth']], function () {
-
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-
-
     // Todo Routes
-
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [TodoController::class, 'index'])->name('dashboard');
