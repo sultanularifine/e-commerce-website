@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderPlacedMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
     public function placeOrder(Request $request)
     {
         $cart = session('cart', []);
-        if(empty($cart)){
+        if (empty($cart)) {
             return redirect()->route('cart')->with('error', 'Your cart is empty!');
         }
 
@@ -27,7 +29,7 @@ class CheckoutController extends Controller
 
         // Calculate subtotal
         $subtotal = 0;
-        foreach($cart as $item){
+        foreach ($cart as $item) {
             $subtotal += $item['price'] * $item['quantity'];
         }
 
@@ -47,9 +49,9 @@ class CheckoutController extends Controller
             'total' => $total,
             'payment_method' => 'Cash on Delivery',
             'items' => json_encode($cart),
-            
-        ]);
 
+        ]);
+        Mail::to($validated['email'])->send(new OrderPlacedMail($order));
         // Clear Cart
         session()->forget('cart');
 
