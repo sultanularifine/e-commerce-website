@@ -33,4 +33,8 @@ class HomepageController extends Controller
 
         return view('frontend.pages.home', compact('sliders', 'newArrivals', 'brands', 'categories'));
     }
+    public function about()
+    {
+        return view('frontend.pages.about');
+    }
 }

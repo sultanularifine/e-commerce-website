@@ -11,6 +11,11 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\ProductPageController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\User\HomepageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,11 +43,10 @@ Route::group(['middleware' => ['auth']], function () {
     // Todo Routes
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', [TodoController::class, 'index'])->name('dashboard');
-            Route::post('/', [TodoController::class, 'store'])->name('todo.store');
-            Route::get('//{id}', [TodoController::class, 'edit'])->name('todo.edit');
-            Route::put('//{id}', [TodoController::class, 'update'])->name('todo.update');
-            Route::delete('//{id}', [TodoController::class, 'destroy'])->name('todo.destroy');
+            Route::get('/{editId?}', [DashboardController::class, 'index'])->name('dashboard');
+            Route::post('/', [DashboardController::class, 'store'])->name('todo.store');
+            Route::put('//{id}', [DashboardController::class, 'update'])->name('todo.update');
+            Route::delete('//{id}', [DashboardController::class, 'destroy'])->name('todo.destroy');
         });
 
         //Blog Controller
@@ -61,10 +65,35 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('brands', BrandController::class);
         Route::resource('slider', SliderController::class);
         Route::resource('header-settings', HeaderSettingController::class);
+        Route::prefix('order')->group(function () {
+            Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+            Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+            Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.status');
+            Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
+            Route::get('/pending', [OrderController::class, 'pending'])->name('admin.orders.pending');
+            Route::get('/processing', [OrderController::class, 'processing'])->name('admin.orders.processing');
+            Route::get('/completed', [OrderController::class, 'completed'])->name('admin.orders.completed');
+            Route::get('/cancelled', [OrderController::class, 'cancelled'])->name('admin.orders.cancelled');
+        });
     });
 });
+
 Route::redirect('/', '/home');
 Route::get('/home', [HomepageController::class, 'index'])->name('home');
+Route::get('/about', [HomepageController::class, 'about'])->name('about');
 Route::resource('product', ProductPageController::class);
 Route::get('/product/{slug}', [ProductPageController::class, 'show'])->name('products.view');
-Route::get('/cart', [ProductPageController::class, 'cart'])->name('cart');
+Route::get('/new-arrivals', [ProductPageController::class, 'newArrivals'])->name('products.newArrivals');
+
+Route::post('/cart/buy/{product}', [CartController::class, 'buyNow'])->name('cart.buy');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.index');
+Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+
+// Contact Page
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+// Contact Form Submission
+Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');

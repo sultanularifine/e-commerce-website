@@ -1,17 +1,16 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'All Products - Auto Parts Market')
+@section('title', 'New Arrivals - Auto Parts Market')
 
 @section('style')
     <style>
-        main {
+        MAIN {
             background: #f8f8f8;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-
             padding: 20px 15px;
         }
 
@@ -222,62 +221,62 @@
 
 @section('content')
     <main class="container">
-        <h1>ALL PRODUCTS</h1>
+        <h1>NEW ARRIVALS</h1>
 
         <div class="listing-layout">
             {{-- Sidebar --}}
             <aside class="sidebar">
-                {{-- Categories --}}
                 <div class="filter-section filter-categories">
-                    <h3>CATEGORIES</h3>
-                    <ul class="filter-list">
-                        @foreach ($categories as $category)
-                            <li>
-                                <a href="{{ route('product.index', ['category' => $category->slug]) }}">
-                                    {{ $category->name }} ({{ $category->products->count() }})
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                    {{-- Categories --}}
+                    <div class="filter-section filter-categories">
+                        <h3>CATEGORIES</h3>
+                        <ul class="filter-list">
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="{{ route('product.index', ['category' => $category->slug]) }}">
+                                        {{ $category->name }} ({{ $category->products->count() }})
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                {{-- Brands --}}
-                <div class="filter-section filter-brands">
-                    <h3>BRANDS</h3>
-                    <ul class="filter-list">
-                        @foreach ($brands as $brand)
-                            <li>
-                                <a href="{{ route('product.index', ['brand' => $brand->slug]) }}">
-                                    {{ $brand->name }} ({{ $brand->products->count() }})
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                    {{-- Brands --}}
+                    <div class="filter-section filter-brands">
+                        <h3>BRANDS</h3>
+                        <ul class="filter-list">
+                            @foreach ($brands as $brand)
+                                <li>
+                                    <a href="{{ route('product.index', ['brand' => $brand->slug]) }}">
+                                        {{ $brand->name }} ({{ $brand->products->count() }})
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
 
-                {{-- Featured Products --}}
-                <div class="filter-section featured-products">
-                    <h3>FEATURED PRODUCTS</h3>
-                    @foreach ($featuredProducts as $featured)
-                        <a href="{{ route('products.view', $featured->slug) }}"
-                            style="text-decoration:none; color:inherit;">
-                            <div class="featured-item">
-                                <img src="{{ asset($featured->thumbnail ?? 'images/default.jpg') }}"
-                                    alt="{{ $featured->name }}">
-                                <div class="featured-details">
-                                    <p class="name">{{ $featured->name }}</p>
-                                    <p class="price">
-                                        ${{ number_format($featured->discount_price ?? $featured->price, 2) }}
-                                        @if ($featured->discount_price)
-                                            <span class="old-price">${{ number_format($featured->price, 2) }}</span>
-                                        @endif
-                                    </p>
+                    <div class="filter-section featured-products">
+                        <h3>FEATURED PRODUCTS</h3>
+                        @foreach ($featuredProducts as $featured)
+                            <a href="{{ route('products.view', $featured->slug) }}"
+                                style="text-decoration:none; color:inherit;">
+                                <div class="featured-item">
+                                    <img src="{{ asset($featured->thumbnail ?? 'images/default.jpg') }}"
+                                        alt="{{ $featured->name }}">
+                                    <div class="featured-details">
+                                        <p class="name">{{ $featured->name }}</p>
+                                        <p class="price">
+                                            ${{ number_format($featured->discount_price ?? $featured->price, 2) }}
+                                            @if ($featured->discount_price)
+                                                <span class="old-price">${{ number_format($featured->price, 2) }}</span>
+                                            @endif
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+                            </a>
+                        @endforeach
+                    </div>
             </aside>
 
             {{-- Product Listing --}}
@@ -296,7 +295,7 @@
                 </div>
 
                 <div class="product-grid">
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
                         <div class="product-card">
                             <a href="{{ route('products.view', $product->slug) }}">
                                 <div class="product-image-container">
@@ -316,21 +315,20 @@
                                     @endif
                                 </p>
                             </a>
-
                             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="btn btn-add-to-cart">ADD TO CART</button>
                             </form>
                         </div>
-                    @endforeach
+                    @empty
+                        <p>No new arrivals found.</p>
+                    @endforelse
                 </div>
 
-                {{-- Pagination --}}
                 <div class="pagination-wrapper d-flex justify-content-center flex-wrap mt-4">
                     {{ $products->withQueryString()->links('pagination::bootstrap-5') }}
                 </div>
-
             </section>
         </div>
     </main>
@@ -338,11 +336,10 @@
 
 @section('scripts')
     <script>
-        // Sort select JS
         document.getElementById('sortSelect').addEventListener('change', function() {
             const params = new URLSearchParams(window.location.search);
             params.set('sort', this.value);
-            params.delete('page'); // Reset page to 1 when changing sort
+            params.delete('page');
             window.location.search = params.toString();
         });
     </script>

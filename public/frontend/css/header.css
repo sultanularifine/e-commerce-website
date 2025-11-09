@@ -3,9 +3,11 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
-a{
+
+a {
     text-decoration: none;
 }
+
 /* --- TOP BAR --- */
 .top-bar {
     display: flex;
@@ -17,6 +19,7 @@ a{
     font-size: 14px;
     flex-wrap: wrap;
 }
+
 .top-bar .social a,
 .top-bar .right-icons a {
     color: #fff;
@@ -24,10 +27,12 @@ a{
     font-size: 16px;
     transition: color 0.3s;
 }
+
 .top-bar .social a:hover,
 .top-bar .right-icons a:hover {
     color: #ffc107;
 }
+
 .top-bar .contact {
     color: #ffc107;
     font-weight: bold;
@@ -44,15 +49,18 @@ a{
     flex-wrap: wrap;
     position: relative;
 }
+
 .logo {
     font-size: 1.5em;
     font-weight: bold;
     display: flex;
     align-items: center;
 }
+
 .logo span {
     margin-right: 8px;
 }
+
 .nav-links {
     list-style: none;
     display: flex;
@@ -60,15 +68,18 @@ a{
     margin: 0;
     padding: 0;
 }
+
 .nav-links li a {
     text-decoration: none;
     color: #333;
     font-weight: 600;
     transition: color 0.3s;
 }
+
 .nav-links li a:hover {
     color: #ffc107;
 }
+
 .nav-right input {
     padding: 8px 12px;
     border-radius: 4px;
@@ -91,23 +102,121 @@ a{
         margin-top: 10px;
         gap: 10px;
     }
+
     .nav-links.active {
         display: flex;
     }
+
     .hamburger {
         display: block;
     }
+
     .nav-right {
         width: 100%;
         margin-top: 10px;
     }
+
     .nav-right input {
         width: 100%;
         box-sizing: border-box;
     }
 }
+
 @media (max-width: 480px) {
-    .top-bar { font-size: 12px; }
-    .logo { font-size: 1.2em; }
-    .nav-links li a { font-size: 14px; }
+    .top-bar {
+        font-size: 12px;
+    }
+
+    .logo {
+        font-size: 1.2em;
+    }
+
+    .nav-links li a {
+        font-size: 14px;
+    }
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    padding: 8px 10px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ff6600;
+}
+
+/* 🔥 3rd menu item “HOT” label */
+.nav-links li:nth-child(3)::after {
+    content: "HOT";
+    position: absolute;
+    top: -12px;
+    /* distance above link */
+    right: 5px;
+    /* position adjust */
+    background: #ff3b3b;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    animation: pulse 1.5s infinite;
+}
+
+/* Optional animation for attention */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.cart-link {
+    position: relative;
+    display: inline-block;
+    color: #333;
+    text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #FFD700;
+    /* Gold / yellow color */
+    color: #000;
+    /* Black text for contrast */
+    font-size: 12px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }

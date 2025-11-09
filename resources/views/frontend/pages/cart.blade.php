@@ -45,12 +45,6 @@
         color: #333;
     }
 
-    .btn-remove {
-        background-color: transparent;
-        color: #999;
-        border: 1px solid #ccc;
-        margin-left: 5px;
-    }
 
     .btn-checkout {
         width: 100%;
@@ -115,12 +109,12 @@
     }
 
     .item-name {
-        margin: 0;
+        margin-top: -5px;
         font-weight: 500;
     }
 
     .item-actions {
-        margin-top: 5px;
+        margin-top: 10px;
     }
 
     .col-qty input {
@@ -234,6 +228,18 @@
 <main class="container">
     <h1>SHOPPING CART</h1>
 
+    @if(session('success'))
+        <div style="background:#d4edda;color:#155724;padding:10px;border-radius:5px;margin-bottom:15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div style="background:#f8d7da;color:#721c24;padding:10px;border-radius:5px;margin-bottom:15px;">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="cart-layout">
         <!-- Cart Items -->
         <div class="cart-items-section">
@@ -244,56 +250,33 @@
                 <span class="col-subtotal">Subtotal</span>
             </div>
 
-            <!-- Single Cart Item -->
-            <div class="cart-item">
-                <div class="col-item">
-                    <img src="vacuum.jpg" alt="Samsung Vacuum" class="item-image">
-                    <div>
-                        <p class="item-name">Samsung Vacuum Cleaner Power</p>
-                        <div class="item-actions">
-                            <button class="btn btn-yellow">Edit</button>
-                            <button class="btn btn-remove">Remove</button>
+            <form action="{{ route('cart.update') }}" method="POST">
+                @csrf
+                @forelse ($cart as $id => $item)
+                    <div class="cart-item">
+                        <div class="col-item">
+                            <img src="{{ asset($item['image'] ?? 'images/default.jpg') }}" alt="{{ $item['name'] }}" class="item-image">
+                            <div>
+                                <p class="item-name">{{ $item['name'] }}</p>
+                                <div class="item-actions">
+                                    <a href="{{ route('cart.remove', $id) }}" class="btn btn-remove">Remove</a>
+                                </div>
+                            </div>
                         </div>
+                        <span class="col-price">${{ number_format($item['price'], 2) }}</span>
+                        <span class="col-qty">
+                            <input type="number" name="quantities[{{ $id }}]" value="{{ $item['quantity'] }}" min="1">
+                        </span>
+                        <span class="col-subtotal">${{ number_format($item['price'] * $item['quantity'], 2) }}</span>
                     </div>
-                </div>
-                <span class="col-price">$99.00</span>
-                <span class="col-qty"><input type="number" value="5" min="1" readonly></span>
-                <span class="col-subtotal">$495.00</span>
-            </div>
+                @empty
+                    <p>Your cart is empty!</p>
+                @endforelse
 
-            <div class="cart-item">
-                <div class="col-item">
-                    <img src="watch.jpg" alt="Apple Watch" class="item-image">
-                    <div>
-                        <p class="item-name">Apple iWatch Sport Green</p>
-                        <div class="item-actions">
-                            <button class="btn btn-yellow">Edit</button>
-                            <button class="btn btn-remove">Remove</button>
-                        </div>
-                    </div>
-                </div>
-                <span class="col-price">$95.00</span>
-                <span class="col-qty"><input type="number" value="1" min="1" readonly></span>
-                <span class="col-subtotal">$95.00</span>
-            </div>
-
-            <div class="cart-item">
-                <div class="col-item">
-                    <img src="imac.jpg" alt="Apple iMac" class="item-image">
-                    <div>
-                        <p class="item-name">Apple iMac 2017 21.5-inch Retina 4K</p>
-                        <div class="item-actions">
-                            <button class="btn btn-yellow">Edit</button>
-                            <button class="btn btn-remove">Remove</button>
-                        </div>
-                    </div>
-                </div>
-                <span class="col-price">$410.00</span>
-                <span class="col-qty"><input type="number" value="1" min="1" readonly></span>
-                <span class="col-subtotal">$410.00</span>
-            </div>
-
-            <button class="btn btn-update-cart">Update Shopping Cart</button>
+                @if ($cart)
+                    <button type="submit" class="btn btn-update-cart">Update Shopping Cart</button>
+                @endif
+            </form>
         </div>
 
         <!-- Cart Summary -->
@@ -301,20 +284,21 @@
             <h2>SUMMARY</h2>
             <div class="summary-row subtotal-row">
                 <span>Subtotal</span>
-                <span>$1,000.00</span>
+                <span>${{ number_format($subtotal, 2) }}</span>
             </div>
             <div class="summary-row">
                 <span>Shipping (Flat Rate)</span>
-                <span>$35.00</span>
+                <span>${{ number_format($shipping, 2) }}</span>
             </div>
             <div class="summary-row order-total-row">
                 <span>Order Total</span>
-                <span>$1,035.00</span>
+                <span>${{ number_format($total, 2) }}</span>
             </div>
 
             <div class="discount-code">
-                <span>Apply Discount Code</span>
-                <button class="btn btn-checkout btn-orange">PROCEED TO CHECKOUT</button>
+                <a href="{{ route('checkout.index') }}" class="btn btn-checkout btn-orange">
+                    PROCEED TO CHECKOUT
+                </a>
             </div>
         </div>
     </div>

@@ -53,6 +53,43 @@
                     </ul>
                 </li>
             @endcanany
+            {{-- Orders --}}
+    @canany(['order-list', 'order-view', 'order-status', 'order-delete'])
+    <li class="nav-item dropdown {{ Request::routeIs('admin.orders.*') ? 'active' : '' }}">
+        <a href="#" class="nav-link has-dropdown">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Orders</span>
+        </a>
+        <ul class="dropdown-menu">
+            @can('order-list')
+            <li class="{{ Request::routeIs('admin.orders.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.orders.index') }}">All Orders</a>
+            </li>
+            @endcan
+            @can('order-list')
+            <li class="{{ Request::routeIs('admin.orders.pending') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.orders.pending') }}">Pending</a>
+            </li>
+            @endcan
+            @can('order-list')
+            <li class="{{ Request::routeIs('admin.orders.processing') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.orders.processing') }}">Processing</a>
+            </li>
+            @endcan
+            @can('order-list')
+            <li class="{{ Request::routeIs('admin.orders.completed') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.orders.completed') }}">Completed</a>
+            </li>
+            @endcan
+            @can('order-list')
+            <li class="{{ Request::routeIs('admin.orders.cancelled') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.orders.cancelled') }}">Cancelled</a>
+            </li>
+            @endcan
+        </ul>
+    </li>
+    @endcanany
+
 
             {{-- Products --}}
             @canany(['product-list', 'product-create', 'product-edit', 'product-delete'])
@@ -136,8 +173,7 @@
 
             <li class="menu-header">Home</li>
             {{-- Header Settings --}}
-            @canany(['header-setting-list', 'header-settings-create', 'header-setting-edit',
-                'header-settings-delete'])
+            @canany(['header-setting-list', 'header-settings-create', 'header-setting-edit', 'header-settings-delete'])
                 <li class="nav-item dropdown {{ Request::routeIs('header-settings.*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown">
                         <i class="fa-solid fa-header"></i>

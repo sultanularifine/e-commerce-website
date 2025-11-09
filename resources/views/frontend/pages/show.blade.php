@@ -355,11 +355,20 @@
                 <p>{{ $product->description }}</p>
 
                 <div class="product-actions">
-                    <label>Qty</label>
-                    <input type="number" value="1" min="1">
-                    <button class="btn">Add to Cart</button>
-                    <button class="btn">Buy Now</button>
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <label>Qty</label>
+                        <input type="number" name="quantity" value="1" min="1">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+
+                    <form action="{{ route('cart.buy', $product->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn">Buy Now</button>
+                    </form>
                 </div>
+
             </div>
         </section>
 

@@ -29,7 +29,15 @@ class PermissionTableSeeder extends Seeder
             'role-create',
             'role-edit',
             'role-delete',
-
+            // ===== Order Permissions =====
+            'order-list',
+            'order-view',
+            'order-edit',
+            'order-delete',
+             'order-pending',      // Pending orders page
+            'order-processing',   // Processing orders page
+            'order-completed',    // Completed orders page
+            'order-cancelled', 
             // ===== Product Permissions =====
             'product-list',
             'product-create',
@@ -53,13 +61,13 @@ class PermissionTableSeeder extends Seeder
             'blog-create',
             'blog-edit',
             'blog-delete',
-            
-             // ===== home Slider Permissions =====
+
+            // ===== home Slider Permissions =====
             'slider-list',
             'slider-create',
             'slider-edit',
             'slider-delete',
-            
+
             // ===== Header Permissions =====
             'header-setting-list',
             'header-setting-create',
