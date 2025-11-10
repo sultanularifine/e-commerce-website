@@ -87,7 +87,86 @@
                 <div class="section-header">
                     <h1>E-commerce Dashboard</h1>
                 </div>
+                <!-- To-Do List Section -->
+                <h2 class="section-title">To-Do List</h2>
+                <div class="todo-card">
+                    <!-- Add New Task Form -->
+                    <form action="{{ route('todo.store') }}" method="POST" class="mb-3">
+                        @csrf
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <input type="text" name="name" class="form-control" placeholder="Task name..."
+                                    required>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="time" name="time" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" name="date" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success w-100">Add Task</button>
+                            </div>
+                        </div>
+                    </form>
 
+                    <!-- Task List -->
+                    @foreach ($data as $index => $task)
+                        <div class="task-item col-md-12">
+                            @if (isset($editId) && $editId == $task->id)
+                                <!-- Inline Edit Form -->
+                                <form action="{{ route('todo.update', $task->id) }}" method="POST"
+                                    class="row col-md-12 g-3 align-items-end">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class=" col-md-4">
+                                        <input type="text" name="name" value="{{ $task->name }}"
+                                            class="form-control" placeholder="Task Name" required>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <input type="time" name="time" value="{{ $task->time }}"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class=" col-md-3">
+                                        <input type="date" name="date" value="{{ $task->date }}"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class=" col-md-2 d-flex gap-2 mt-2">
+                                        <button type="submit" class="btn btn-success flex-grow-1">Save</button>
+                                        <a href="{{ route('dashboard') }}"
+                                            class="btn btn-secondary ml-2 flex-grow-1">Cancel</a>
+                                    </div>
+                                </form>
+                            @else
+                                <!-- Normal Display -->
+                                <div class="d-flex justify-content-between w-100 align-items-center">
+                                    <div>
+                                        <span class="badge bg-light text-dark">{{ $index + 1 }}</span>
+                                        <span class="ms-2">{{ $task->name }}</span>
+                                    </div>
+                                    <div class="d-flex gap-2 align-items-center">
+                                        <span
+                                            class="badge bg-info">{{ \Carbon\Carbon::parse($task->time)->format('h:i A') }}</span>
+                                        <span
+                                            class="badge bg-warning">{{ \Carbon\Carbon::parse($task->date)->format('j F Y') }}</span>
+                                        <a href="{{ route('dashboard', $task->id) }}" class="btn btn-sm btn-primary"><i
+                                                class="fas fa-edit"></i></a>
+                                        <form action="{{ route('todo.destroy', $task->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
                 <!-- Overview / Summary -->
                 <h2 class="section-title">Overview</h2>
                 <div class="row">
@@ -179,86 +258,7 @@
                     </div>
                 </div>
 
-                <!-- To-Do List Section -->
-                <h2 class="section-title">To-Do List</h2>
-                <div class="todo-card">
-                    <!-- Add New Task Form -->
-                    <form action="{{ route('todo.store') }}" method="POST" class="mb-3">
-                        @csrf
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" name="name" class="form-control" placeholder="Task name..."
-                                    required>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="time" name="time" class="form-control" required>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="date" name="date" class="form-control" required>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-success w-100">Add Task</button>
-                            </div>
-                        </div>
-                    </form>
 
-                    <!-- Task List -->
-                    @foreach ($data as $index => $task)
-                        <div class="task-item col-md-12">
-                            @if (isset($editId) && $editId == $task->id)
-                                <!-- Inline Edit Form -->
-                                <form action="{{ route('todo.update', $task->id) }}" method="POST"
-                                    class="row col-md-12 g-3 align-items-end">
-                                    @csrf
-                                    @method('PUT')
-
-                                    <div class=" col-md-4">
-                                        <input type="text" name="name" value="{{ $task->name }}"
-                                            class="form-control" placeholder="Task Name" required>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <input type="time" name="time" value="{{ $task->time }}"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class=" col-md-3">
-                                        <input type="date" name="date" value="{{ $task->date }}"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class=" col-md-2 d-flex gap-2 mt-2">
-                                        <button type="submit" class="btn btn-success flex-grow-1">Save</button>
-                                        <a href="{{ route('dashboard') }}"
-                                            class="btn btn-secondary ml-2 flex-grow-1">Cancel</a>
-                                    </div>
-                                </form>
-                            @else
-                                <!-- Normal Display -->
-                                <div class="d-flex justify-content-between w-100 align-items-center">
-                                    <div>
-                                        <span class="badge bg-light text-dark">{{ $index + 1 }}</span>
-                                        <span class="ms-2">{{ $task->name }}</span>
-                                    </div>
-                                    <div class="d-flex gap-2 align-items-center">
-                                        <span
-                                            class="badge bg-info">{{ \Carbon\Carbon::parse($task->time)->format('h:i A') }}</span>
-                                        <span
-                                            class="badge bg-warning">{{ \Carbon\Carbon::parse($task->date)->format('j F Y') }}</span>
-                                        <a href="{{ route('dashboard', $task->id) }}" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></a>
-                                        <form action="{{ route('todo.destroy', $task->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
 
             </div>
         </section>

@@ -25,23 +25,36 @@
 <!-- NAVBAR -->
 <div class="navbar">
     <a href="{{ route('home') }}">
+        @php
+            $logo = \App\Models\FooterSetting::where('type', 'logo')->first();
+        @endphp
+
         <div class="logo">
-            <img src="{{ asset('frontend/images/logo.png') }}" alt="Market Logo"
-                style="height:30px; width:auto; vertical-align:middle;">
+            @if ($logo && file_exists(public_path('uploads/footer/' . $logo->logo)))
+                <img src="{{ asset('uploads/footer/' . $logo->logo) }}" alt="Market Logo"
+                    style="height:30px; width:auto; vertical-align:middle;">
+            @else
+                <img src="{{ asset('frontend/images/logo.png') }}" alt="Default Logo"
+                    style="height:30px; width:auto; vertical-align:middle;">
+            @endif
         </div>
     </a>
     <div class="hamburger" id="hamburger">
         <i class="fas fa-bars"></i>
     </div>
     <ul class="nav-links" id="navLinks">
-    @foreach (\App\Models\HeaderSetting::where('type', 'menu')->where('status', 1)->orderBy('order')->get() as $menu)
-        <li><a href="{{ $menu->value }}">{{ $menu->name }}</a></li>
-    @endforeach
-</ul>
+        @foreach (\App\Models\HeaderSetting::where('type', 'menu')->where('status', 1)->orderBy('order')->get() as $menu)
+            <li><a href="{{ $menu->value }}">{{ $menu->name }}</a></li>
+        @endforeach
+    </ul>
 
-    <div class="nav-right">
-        <input type="text" class="search" placeholder="Search...">
-    </div>
+   <div class="nav-right">
+    <form action="{{ route('search') }}" method="GET" class="search-form">
+        <input type="text" name="query" class="search" placeholder="Search..." required>
+        <button type="submit"><i class="fas fa-search btn-design"></i></button>
+    </form>
+</div>
+
 </div>
 
 <script>

@@ -99,6 +99,7 @@ a {
     justify-content: center;
     gap: 10px;
     padding: 30px 0;
+    color: #fff;
     flex-wrap: wrap;
 }
 
@@ -314,10 +315,7 @@ a {
 
 {{-- ================= FILTER BAR ================= --}}
 <div class="filter-bar">
-    <select><option>Select Manufacturer</option></select>
-    <select><option>Select Model</option></select>
-    <select><option>Select Year</option></select>
-    <button><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+   <h2>Product Categories</h2>
 </div>
 
 {{-- ================= CATEGORIES ================= --}}

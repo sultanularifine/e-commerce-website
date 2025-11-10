@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Mail\OrderPlacedMail;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -53,8 +54,9 @@ class CheckoutController extends Controller
         ]);
         Mail::to($validated['email'])->send(new OrderPlacedMail($order));
         // Clear Cart
+     
         session()->forget('cart');
 
-        return redirect()->route('checkout.index')->with('success', 'Your order has been placed successfully!');
+        return redirect()->route('cart.index')->with('success', 'Your order has been placed successfully!');
     }
 }

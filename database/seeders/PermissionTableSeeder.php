@@ -34,10 +34,10 @@ class PermissionTableSeeder extends Seeder
             'order-view',
             'order-edit',
             'order-delete',
-             'order-pending',      // Pending orders page
+            'order-pending',      // Pending orders page
             'order-processing',   // Processing orders page
             'order-completed',    // Completed orders page
-            'order-cancelled', 
+            'order-cancelled',
             // ===== Product Permissions =====
             'product-list',
             'product-create',
@@ -73,6 +73,37 @@ class PermissionTableSeeder extends Seeder
             'header-setting-create',
             'header-setting-edit',
             'header-setting-delete',
+
+            // ===== Footer Permissions =====
+            'footer-list',
+            'footer-create',
+            'footer-edit',
+            'footer-delete',
+            // ===== Profile Permissions =====
+            'view-profile',
+            'view-settings',
+            'edit-settings',
+
+            // About
+            'about-list',
+
+            // Stats
+            'stats-list',
+            'stats-create',
+            'stats-edit',
+            'stats-delete',
+
+            // Team Members
+            'team-members-list',
+            'team-members-create',
+            'team-members-edit',
+            'team-members-delete',
+            // Contact
+            'contact-page-list',
+            'contact-page-edit',
+            'contact-messages-list',
+            'contact-messages-view',
+            'contact-messages-delete'
         ];
 
 

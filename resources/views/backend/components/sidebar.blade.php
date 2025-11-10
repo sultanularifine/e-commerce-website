@@ -54,41 +54,41 @@
                 </li>
             @endcanany
             {{-- Orders --}}
-    @canany(['order-list', 'order-view', 'order-status', 'order-delete'])
-    <li class="nav-item dropdown {{ Request::routeIs('admin.orders.*') ? 'active' : '' }}">
-        <a href="#" class="nav-link has-dropdown">
-            <i class="fa fa-shopping-cart"></i>
-            <span>Orders</span>
-        </a>
-        <ul class="dropdown-menu">
-            @can('order-list')
-            <li class="{{ Request::routeIs('admin.orders.index') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.orders.index') }}">All Orders</a>
-            </li>
-            @endcan
-            @can('order-list')
-            <li class="{{ Request::routeIs('admin.orders.pending') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.orders.pending') }}">Pending</a>
-            </li>
-            @endcan
-            @can('order-list')
-            <li class="{{ Request::routeIs('admin.orders.processing') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.orders.processing') }}">Processing</a>
-            </li>
-            @endcan
-            @can('order-list')
-            <li class="{{ Request::routeIs('admin.orders.completed') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.orders.completed') }}">Completed</a>
-            </li>
-            @endcan
-            @can('order-list')
-            <li class="{{ Request::routeIs('admin.orders.cancelled') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.orders.cancelled') }}">Cancelled</a>
-            </li>
-            @endcan
-        </ul>
-    </li>
-    @endcanany
+            @canany(['order-list', 'order-view', 'order-status', 'order-delete'])
+                <li class="nav-item dropdown {{ Request::routeIs('admin.orders.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Orders</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('order-list')
+                            <li class="{{ Request::routeIs('admin.orders.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.index') }}">All Orders</a>
+                            </li>
+                        @endcan
+                        @can('order-list')
+                            <li class="{{ Request::routeIs('admin.orders.pending') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.pending') }}">Pending</a>
+                            </li>
+                        @endcan
+                        @can('order-list')
+                            <li class="{{ Request::routeIs('admin.orders.processing') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.processing') }}">Processing</a>
+                            </li>
+                        @endcan
+                        @can('order-list')
+                            <li class="{{ Request::routeIs('admin.orders.completed') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.completed') }}">Completed</a>
+                            </li>
+                        @endcan
+                        @can('order-list')
+                            <li class="{{ Request::routeIs('admin.orders.cancelled') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.orders.cancelled') }}">Cancelled</a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcanany
 
 
             {{-- Products --}}
@@ -170,6 +170,32 @@
                     </ul>
                 </li>
             @endcanany
+            {{-- Contact Page & Contact Messages --}}
+            @canany(['contact-page-list', 'contact-page-edit', 'contact-messages-list', 'contact-messages-view',
+                'contact-messages-delete'])
+                <li
+                    class="nav-item dropdown {{ Request::routeIs('contact-page.*') || Request::routeIs('admin.contact.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {{-- Contact Page --}}
+                        @canany(['contact-page-list', 'contact-page-edit'])
+                            <li class="{{ Request::routeIs('contact-page.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('contact-page.index') }}">Manage Contact Page</a>
+                            </li>
+                        @endcanany
+
+                        {{-- Contact Messages --}}
+                        @can('contact-messages-list')
+                            <li class="{{ Request::routeIs('admin.contact.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.contact.index') }}">Contact Messages</a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcanany
 
             <li class="menu-header">Home</li>
             {{-- Header Settings --}}
@@ -211,18 +237,88 @@
                     </ul>
                 </li>
             @endcanany
+            <!-- Footer Settings -->
+            @canany(['footer-list', 'footer-create', 'footer-edit', 'footer-delete'])
+                <li class="nav-item dropdown {{ Request::routeIs('footer.*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fas fa-shoe-prints"></i>
+                        <span>Footer Settings</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @can('footer-create')
+                            <li class="{{ Request::routeIs('footer.create') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('footer.create') }}">Add Footer Item</a>
+                            </li>
+                        @endcan
+                        <li class="{{ Request::routeIs('footer.index') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('footer.index') }}">Footer List</a>
+                        </li>
+                    </ul>
+                </li>
+            @endcanany
+            <li class="menu-header">About</li>
+            <!-- About Menu -->
+            <ul class="sidebar-menu">
+                @canany(['about-list'])
+                    <li class="nav-item dropdown {{ Request::routeIs('about.*') ? 'active' : '' }}">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Settings</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="{{ Request::routeIs('about.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('about.index') }}">About List</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcanany
 
+                @canany(['stats-list', 'stats-create', 'stats-edit', 'stats-delete'])
+                    <li class="nav-item dropdown {{ Request::routeIs('stats.*') ? 'active' : '' }}">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Website Stats</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @can('stats-create')
+                                <li class="{{ Request::routeIs('stats.create') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('stats.create') }}">Add Stat</a>
+                                </li>
+                            @endcan
+                            <li class="{{ Request::routeIs('stats.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('stats.index') }}">Stats List</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcanany
 
-        </ul>
-
-        <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-            <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-        </div>
+                @canany(['team-members-list', 'team-members-create', 'team-members-edit', 'team-members-delete'])
+                    <li class="nav-item dropdown {{ Request::routeIs('team-members.*') ? 'active' : '' }}">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-users"></i>
+                            <span>Team Members</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @can('team-members-create')
+                                <li class="{{ Request::routeIs('team-members.create') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('team-members.create') }}">Add Member</a>
+                                </li>
+                            @endcan
+                            <li class="{{ Request::routeIs('team-members.index') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('team-members.index') }}">Team List</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcanany
+            </ul>
+            <div class="hide-sidebar-mini mt-4 mb-4 p-3">
+                <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
     </aside>
 </div>

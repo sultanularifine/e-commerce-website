@@ -149,66 +149,43 @@
 @section('content')
     <main class="about-section">
         <section class="about-hero">
-            <h1>About Auto Parts Market</h1>
-            <p>Your Trusted Destination for Quality Auto Parts</p>
+            <h1>{{ $about->title ?? 'About Auto Parts Market' }}</h1>
+            <p>{{ $about->subtitle ?? 'Your Trusted Destination for Quality Auto Parts' }}</p>
+
         </section>
 
         <section class="about-content">
             <div class="about-text">
                 <h2>Who We Are</h2>
-                <p>Auto Parts Market is your one-stop shop for all automotive needs. From engine components to accessories,
-                    we provide high-quality, affordable parts that keep your vehicle running smoothly.</p>
-                <p>Founded with a passion for cars and customer satisfaction, we’ve been serving car enthusiasts and repair
-                    professionals with genuine products from trusted brands.</p>
+                <p>{{ $about->who_we_are }}</p>
+                <p>{{ $about->our_story }}</p>
             </div>
             <div>
-                <img src="{{ asset('images/about-us.jpg') }}" alt="About Auto Parts Market">
+                <img src="{{ asset('storage/' . $about->image) }}" alt="About Auto Parts Market">
             </div>
         </section>
 
         <section class="stats">
-            <div class="stat-item">
-                <h3>10K+</h3>
-                <p>Happy Customers</p>
-            </div>
-            <div class="stat-item">
-                <h3>5K+</h3>
-                <p>Products in Stock</p>
-            </div>
-            <div class="stat-item">
-                <h3>100+</h3>
-                <p>Trusted Brands</p>
-            </div>
-            <div class="stat-item">
-                <h3>5 Years</h3>
-                <p>Of Excellence</p>
-            </div>
+            @foreach ($stats as $stat)
+                <div class="stat-item">
+                    <h3>{{ $stat->value }}</h3>
+                    <p>{{ $stat->title }}</p>
+                </div>
+            @endforeach
         </section>
 
         <section class="team-section">
             <h2>Meet Our Team</h2>
             <div class="team-grid">
-                <div class="team-member">
-                    <img src="{{ asset('images/team1.jpg') }}" alt="Team Member">
-                    <h4>John Smith</h4>
-                    <p>Founder & CEO</p>
-                </div>
-                <div class="team-member">
-                    <img src="{{ asset('images/team2.jpg') }}" alt="Team Member">
-                    <h4>Sarah Johnson</h4>
-                    <p>Marketing Head</p>
-                </div>
-                <div class="team-member">
-                    <img src="{{ asset('images/team3.jpg') }}" alt="Team Member">
-                    <h4>Michael Lee</h4>
-                    <p>Product Manager</p>
-                </div>
-                <div class="team-member">
-                    <img src="{{ asset('images/team4.jpg') }}" alt="Team Member">
-                    <h4>Emily Davis</h4>
-                    <p>Customer Support</p>
-                </div>
+                @foreach ($team as $member)
+                    <div class="team-member">
+                        <img src="{{ asset('storage/' . $member->image) }}" alt="{{ $member->name }}">
+                        <h4>{{ $member->name }}</h4>
+                        <p>{{ $member->role }}</p>
+                    </div>
+                @endforeach
             </div>
         </section>
     </main>
+
 @endsection

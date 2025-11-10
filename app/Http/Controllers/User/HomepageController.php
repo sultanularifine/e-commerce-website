@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutInfo;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\Stat;
+use App\Models\TeamMember;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
@@ -35,6 +38,11 @@ class HomepageController extends Controller
     }
     public function about()
     {
-        return view('frontend.pages.about');
+         $about = AboutInfo::first();
+        $stats = Stat::all();
+        $team = TeamMember::all();
+
+        return view('frontend.pages.about', compact('about', 'stats', 'team'));
+  
     }
 }

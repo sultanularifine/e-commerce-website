@@ -220,3 +220,34 @@ a {
     justify-content: center;
     border-radius: 50%;
 }
+
+button {
+    border: none;
+}
+
+.btn-design {
+
+    background-color: #ff5722;
+    border: none;
+    color: #fff;
+    padding: 14px 14px;
+    border-radius: 0 25px 25px 0;
+    /* right rounded */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
+}
+
+/* Hover effect */
+.btn-design:hover {
+    background-color: #e64a19;
+    transform: scale(1.05);
+}
+
+/* Icon inside button */
+.btn-design i {
+    font-size: 14px;
+}

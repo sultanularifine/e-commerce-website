@@ -1,22 +1,29 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutInfoController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\HeaderSettingController;
-use App\Http\Controllers\Admin\TodoController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\User\ProductPageController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\StatController;
+use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FooterSettingController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\User\ProductPageController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\ContactController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\HomepageController;
+use App\Http\Controllers\User\SearchController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('//{id}', [DashboardController::class, 'update'])->name('todo.update');
             Route::delete('//{id}', [DashboardController::class, 'destroy'])->name('todo.destroy');
         });
+        Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+        Route::get('profile/settings', [ProfileController::class, 'settings'])->name('settings.index');
+        Route::put('profile/settings', [ProfileController::class, 'update'])->name('profile.update');
 
         //Blog Controller
         Route::prefix('blog')->group(function () {
@@ -65,6 +75,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('brands', BrandController::class);
         Route::resource('slider', SliderController::class);
         Route::resource('header-settings', HeaderSettingController::class);
+        Route::resource('footer', FooterSettingController::class);
+        Route::resource('about', AboutInfoController::class);
+        Route::resource('stats', StatController::class);
+        Route::resource('team-members', TeamMemberController::class);
+         Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('admin.contact.index');
+    Route::get('contact-messages/{id}', [ContactMessageController::class, 'show'])->name('admin.contact.show');
+    Route::delete('contact-messages/{id}', [ContactMessageController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::get('contact-page', [ContactPageController::class, 'index'])->name('contact-page.index');
+        Route::get('contact-page/{id}/edit', [ContactPageController::class, 'edit'])->name('contact-page.edit');
+        Route::put('contact-page/{id}', [ContactPageController::class, 'update'])->name('contact-page.update');
         Route::prefix('order')->group(function () {
             Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
             Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
@@ -92,8 +112,6 @@ Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.u
 Route::get('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.index');
 Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
-
-// Contact Page
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-// Contact Form Submission
 Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');
+Route::get('/search', [SearchController::class, 'index'])->name('search');

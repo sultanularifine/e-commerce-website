@@ -192,6 +192,7 @@
 
             <button type="submit" class="btn-place-order">Place Order</button>
         </form>
+
     </div>
 
     <script>
@@ -277,4 +278,5 @@
             document.getElementById('shipping').value = shipping;
         }
     </script>
+
 @endsection

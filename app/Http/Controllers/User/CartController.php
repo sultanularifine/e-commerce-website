@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -91,30 +92,30 @@ class CartController extends Controller
 
         return view('frontend.pages.checkout', compact('cart', 'subtotal', 'shipping', 'total'));
     }
+    
     public function buyNow(Request $request, Product $product)
-{
-    // 🛍️ Create a temporary cart for this product
-    $quantity = $request->input('quantity', 1);
+    {
+        // 🛍️ Create a temporary cart for this product
+        $quantity = $request->input('quantity', 1);
 
-    $cart = [
-        $product->id => [
-            'name' => $product->name,
-            'price' => $product->discount_price ?? $product->price,
-            'quantity' => $quantity,
-            'image' => $product->thumbnail,
-        ],
-    ];
+        $cart = [
+            $product->id => [
+                'name' => $product->name,
+                'price' => $product->discount_price ?? $product->price,
+                'quantity' => $quantity,
+                'image' => $product->thumbnail,
+            ],
+        ];
 
-    // 🧠 Save to session (optional, so checkout can read it)
-    session()->put('cart', $cart);
+        // 🧠 Save to session (optional, so checkout can read it)
+        session()->put('cart', $cart);
 
-    // 🧾 Calculate totals
-    $subtotal = $cart[$product->id]['price'] * $quantity;
-    $shipping = 35;
-    $total = $subtotal + $shipping;
+        // 🧾 Calculate totals
+        $subtotal = $cart[$product->id]['price'] * $quantity;
+        $shipping = 35;
+        $total = $subtotal + $shipping;
 
-    // 🧭 Redirect directly to checkout page
-    return view('frontend.pages.checkout', compact('cart', 'subtotal', 'shipping', 'total'));
-}
-
+        // 🧭 Redirect directly to checkout page
+        return view('frontend.pages.checkout', compact('cart', 'subtotal', 'shipping', 'total'));
+    }
 }
