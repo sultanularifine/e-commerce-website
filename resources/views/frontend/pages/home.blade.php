@@ -121,69 +121,100 @@ a {
 .filter-bar button:hover {
     background-color: #d93b25;
 }
-
 /* ================= CATEGORIES ================= */
 .categories {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
     background: #f8f8f8;
-    padding: 40px 20px;
+    padding: 30px 15px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .category-card {
-    width: 150px;
     text-align: center;
-    padding: 15px;
-    border-radius: 10px;
-    transition: 0.3s;
+    padding: 16px 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
     cursor: pointer;
-    background: #f8f8f8;
+    background: #fff;
+    text-decoration: none;
+    color: #333;
 }
 
 .category-card img {
-    width: 60px;
-    margin-bottom: 10px;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 8px;
 }
 
+.category-card h4 {
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Hover + Active */
 .category-card:hover,
 .category-card.active {
     background: #0665c7;
     color: #fff;
 }
 
+.category-card:hover img,
+.category-card.active img {
+    filter: brightness(0) invert(1);
+}
+
+/* Mobile fine tuning */
+@media (max-width: 576px) {
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .category-card h4 {
+        font-size: 13px;
+    }
+}
+
+
 /* ================= NEW ARRIVALS ================= */
 .new-arrivals {
     text-align: center;
-    padding: 40px 20px;
+    padding: 40px 15px;
     background: #f8f8f8;
 }
 
 .new-arrivals h2 {
-    font-size: 28px;
+    font-size: clamp(22px, 4vw, 28px);
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .new-arrivals p {
     color: #666;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    font-size: 14px;
 }
 
+/* GRID */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    margin: auto;
 }
 
+/* CARD */
 .product-card {
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 15px;
-    max-width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 14px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,17 +223,66 @@ a {
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
+/* IMAGE */
 .product-card img {
     width: 100%;
-    height: 180px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
+
+/* TITLE */
+.product-card h3 {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 6px 0;
+    color: #333;
+}
+
+/* PRICE */
+.price {
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 6px;
+}
+
+.new-price {
+    color: #e63946;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.product-card button {
+    width: 100%;
+    font-size: 13px;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* STARS */
+.stars {
+    font-size: 13px;
+    color: #f5a623;
+    margin-bottom: 6px;
+}
+
+/* MOBILE FIX */
+@media (max-width: 576px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 .brands{
     background: #f8f8f8 ;
     padding-bottom: 60px;
@@ -334,7 +414,7 @@ a {
 
 {{-- ================= NEW ARRIVALS ================= --}}
 <section class="new-arrivals">
-    <h2>NEW ARRIVALS</h2>
+    <h2>Our New Products</h2>
     <p>Check out our latest auto parts and accessories</p>
     <div class="product-grid">
         @forelse ($newArrivals as $product)

@@ -20,7 +20,7 @@ class OrderController extends Controller
                   ->orWhere('email', 'like', "%{$search}%");
         }
 
-        $orders = $query->latest()->paginate(20);
+        $orders = $query->latest()->get();
         return view('backend.orders.index', compact('orders'));
     }
 

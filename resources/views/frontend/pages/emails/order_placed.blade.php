@@ -80,7 +80,7 @@
                 <tr>
                     
                     <td>
-                        <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="product-img">
+                        <img src="{{ public_path($item['image']) }}" alt="{{ $item['name'] }}" class="product-img">
                     </td>
                    
                     <td>{{ $item['name'] }}</td>
