@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FooterSettingController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\User\ProductPageController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CheckoutController;
@@ -49,6 +50,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class);
     // Todo Routes
     Route::prefix('admin')->group(function () {
+          Route::get('manage-permissions', [RolePermissionController::class, 'managePermissions'])->name('manage_permissions');
+        // Load permissions for a role (AJAX)
+        Route::get('roles/{role}/permissions', [RolePermissionController::class, 'getPermissions'])->name('get_permissions');
+        Route::post('roles/{role}/permissions', [RolePermissionController::class, 'updatePermissions'])->name('update_permissions');
+
+
         Route::prefix('dashboard')->group(function () {
             Route::get('/{editId?}', [DashboardController::class, 'index'])->name('dashboard');
             Route::post('/', [DashboardController::class, 'store'])->name('todo.store');

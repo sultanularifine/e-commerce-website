@@ -39,23 +39,41 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     $this->validate($request, [
+    //         'name'       => 'required|unique:roles,name',
+    //         'permission' => 'required',
+    //     ]);
+
+    //     $role = Role::create(['name' => $request->input('name')]);
+
+    //     // Convert IDs → names
+    //     $permissions = Permission::whereIn('id', $request->input('permission'))->pluck('name')->toArray();
+    //     $role->syncPermissions($permissions);
+
+    //     return redirect()->route('roles.index')
+    //         ->with('success', 'Role created successfully');
+    // }
+ public function store(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'name'       => 'required|unique:roles,name',
-            'permission' => 'required',
+            'permission' => 'nullable|array',          // array expected
+            'permission.*' => 'integer|exists:permissions,id', // each permission ID check
         ]);
 
+        // Create role
         $role = Role::create(['name' => $request->input('name')]);
 
-        // Convert IDs → names
-        $permissions = Permission::whereIn('id', $request->input('permission'))->pluck('name')->toArray();
-        $role->syncPermissions($permissions);
+        // Assign permissions only if provided
+        if ($request->filled('permission')) {
+            $role->syncPermissions($request->input('permission')); // IDs are enough
+        }
 
         return redirect()->route('roles.index')
             ->with('success', 'Role created successfully');
     }
- 
     /**
      * Display the specified resource.
      */

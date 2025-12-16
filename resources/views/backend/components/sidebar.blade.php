@@ -53,6 +53,25 @@
                     </ul>
                 </li>
             @endcanany
+
+                {{-- Permissions Menu --}}
+            @can('manage-permissions')
+                {{-- এই permission দিয়ে control করা হচ্ছে --}}
+                <li class="nav-item dropdown {{ Request::routeIs('manage_permissions') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Manage Permissions</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::routeIs('manage_permissions') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('manage_permissions') }}">
+                                Role Permissions
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            
             {{-- Orders --}}
             @canany(['order-list', 'order-view', 'order-status', 'order-delete'])
                 <li class="nav-item dropdown {{ Request::routeIs('admin.orders.*') ? 'active' : '' }}">

@@ -29,6 +29,7 @@ class PermissionTableSeeder extends Seeder
             'role-create',
             'role-edit',
             'role-delete',
+            'manage-permissions',
             // ===== Order Permissions =====
             'order-list',
             'order-view',
