@@ -3,503 +3,407 @@
 @section('title', 'Home - Auto Parts Market')
 
 @section('style')
-<style>
-/* ================= GENERAL STYLES ================= */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-body {
-    background: #fff;
-    color: #333;
-    line-height: 1.5;
-}
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            z-index: 2;
+        }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
-.btn {
-    background-color: #ff4d30;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        /* HERO SLIDER */
+        .slider {
+            width: 100%;
+            display: flex;
+        }
 
-.btn:hover {
-    background-color: #d93b25;
-}
+        .slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* ================= HERO SLIDER ================= */
-.hero-slider {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-}
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.hero-slider img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        /* HERO IMAGE BOX */
+        .flex-none {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            position: relative;
+        }
 
-.slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 50%;
-}
+        /* ================= MOBILE ================= */
+        @media(max-width:768px) {
 
-.slider-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
+            section {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 20px;
+            }
 
-.prev-btn { left: 20px; }
-.next-btn { right: 20px; }
+            .flex-1 {
+                width: 100% !important;
+            }
 
-.slider-dots {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-}
+            /* MOBILE HIDE SLIDER BUT PRESERVE SPACE */
+            .flex-none {
+                display: block;
+                /* block রাখুন যাতে height থাকে */
+                height: 200px;
+                /* Mobile এর জন্য height preserve */
+                overflow: hidden;
+                /* content hidden */
+            }
 
-.slider-dots span {
-    display: block;
-    width: 12px;
-    height: 12px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    cursor: pointer;
-}
+            .flex-none .slider,
+            .flex-none .prev-btn,
+            .flex-none .next-btn,
+            .flex-none .dots {
+                /* display: none; */
+                /* slides, buttons, dots hide */
+            }
 
-.slider-dots span.active {
-    background: #ff4d30;
-}
+            /* OPTIONAL: placeholder background to show space */
+            .flex-none::before {
+                content: "";
+                /* display: block; */
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.05);
+                border-radius: 1rem;
+            }
 
-/* ================= FILTER BAR ================= */
-.filter-bar {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 30px 0;
-    color: #fff;
-    flex-wrap: wrap;
-}
+            h3 {
+                font-size: 2.2rem !important;
+                line-height: 1.2;
+            }
 
-.filter-bar select,
-.filter-bar button {
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+            #heroSubtitle {
+                font-size: 0.95rem !important;
+                margin: auto;
+            }
 
-.filter-bar button {
-    background-color: #ff4d30;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-}
+            button {
+                margin-top: 20px;
+            }
 
-.filter-bar button:hover {
-    background-color: #d93b25;
-}
-/* ================= CATEGORIES ================= */
-.categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
-    background: #f8f8f8;
-    padding: 30px 15px;
-    max-width: 1200px;
-    margin: auto;
-}
+        }
 
-.category-card {
-    text-align: center;
-    padding: 16px 10px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    background: #fff;
-    text-decoration: none;
-    color: #333;
-}
+        /* SMALL MOBILE */
+        @media(max-width:480px) {
+            h3 {
+                font-size: 1.8rem !important;
+            }
 
-.category-card img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    margin-bottom: 8px;
-}
-
-.category-card h4 {
-    font-size: 14px;
-    margin: 0;
-    font-weight: 500;
-}
-
-/* Hover + Active */
-.category-card:hover,
-.category-card.active {
-    background: #0665c7;
-    color: #fff;
-}
-
-.category-card:hover img,
-.category-card.active img {
-    filter: brightness(0) invert(1);
-}
-
-/* Mobile fine tuning */
-@media (max-width: 576px) {
-    .categories {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .category-card h4 {
-        font-size: 13px;
-    }
-}
-
-
-/* ================= NEW ARRIVALS ================= */
-.new-arrivals {
-    text-align: center;
-    padding: 40px 15px;
-    background: #f8f8f8;
-}
-
-.new-arrivals h2 {
-    font-size: clamp(22px, 4vw, 28px);
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.new-arrivals p {
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-/* GRID */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-/* CARD */
-.product-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 14px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-}
-
-/* IMAGE */
-.product-card img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-/* TITLE */
-.product-card h3 {
-    font-size: 14px;
-    line-height: 1.4;
-    margin: 6px 0;
-    color: #333;
-}
-
-/* PRICE */
-.price {
-    font-size: 14px;
-    margin: 6px 0;
-}
-
-.old-price {
-    text-decoration: line-through;
-    color: #999;
-    margin-right: 6px;
-}
-
-.new-price {
-    color: #e63946;
-    font-weight: bold;
-}
-
-/* BUTTON */
-.product-card button {
-    width: 100%;
-    font-size: 13px;
-    padding: 8px;
-    border-radius: 6px;
-}
-
-/* STARS */
-.stars {
-    font-size: 13px;
-    color: #f5a623;
-    margin-bottom: 6px;
-}
-
-/* MOBILE FIX */
-@media (max-width: 576px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.brands{
-    background: #f8f8f8 ;
-    padding-bottom: 60px;
-    padding-top: 30px;
-}
-.product-card h3 {
-    font-size: 15px;
-    height: 40px;
-    overflow: hidden;
-    margin-bottom: 8px;
-}
-
-.stars { color: #f1c40f; margin-bottom: 8px; }
-
-.price { font-size: 16px; margin-bottom: 10px; }
-
-.old-price { text-decoration: line-through; color: #888; margin-right: 5px; }
-.new-price { color: #e63946; font-weight: bold; }
-
-/* ================= BRANDS CAROUSEL ================= */
-.carousel-wrapper {
-    overflow: hidden;
-    position: relative;
-}
-
-.carousel {
-    display: flex;
-    gap: 20px;
-    animation: scroll 25s linear infinite;
-}
-
-.carousel:hover {
-    animation-play-state: paused;
-}
-
-/* 5 cards visible per viewport width */
-.carousel .card {
-    flex: 0 0 18%; /* approx 5 cards with gaps */
-    min-width: 18%;
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s;
-}
-
-.carousel .card:hover {
-    transform: translateY(-5px);
-}
-
-.carousel .card img {
-   
-    height: 80px;
-    display: flex;
-    object-fit: contain;
-    margin-bottom: 10px;
-}
-
-.carousel .card h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-}
-.section-title {
-        font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
-}
-.section-title-p {
-       
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-align: center;
-}
-/* Smooth scroll animation */
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) { .carousel .card { flex: 0 0 22%; min-width: 22%; } } /* 4 cards */
-@media (max-width: 992px) { .carousel .card { flex: 0 0 28%; min-width: 28%; } } /* 3 cards */
-@media (max-width: 768px) { .carousel .card { flex: 0 0 45%; min-width: 45%; } } /* 2 cards */
-@media (max-width: 576px) { .carousel .card { flex: 0 0 90%; min-width: 90%; } } /* 1 card */
-</style>
+            #heroSubtitle {
+                font-size: 0.85rem !important;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
-{{-- ================= HERO SLIDER ================= --}}
-<div class="hero-slider" id="heroSlider">
-    @foreach ($sliders as $key => $slider)
-        <div class="slide {{ $key == 0 ? 'active' : '' }}">
-            <img src="{{ asset($slider->image) }}" alt="{{ $slider->title }}">
-            @if($slider->title)
-            <div class="hero-text">
-                <h2>{{ $slider->title }}<br>
-                    @if($slider->subtitle)<small>{{ $slider->subtitle }}</small>@endif
-                </h2>
-            </div>
-            @endif
-        </div>
-    @endforeach
-    <button class="slider-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
-    <button class="slider-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
-    <div class="slider-dots" id="sliderDots"></div>
-</div>
+    <div id="canvas-container" class="absolute top-0 left-0 w-full h-full z-0"></div>
 
-{{-- ================= FILTER BAR ================= --}}
-<div class="filter-bar">
-   <h2>Product Categories</h2>
-</div>
+    <section class="relative text-white py-20 z-10" style="margin-top:30px;">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-10">
 
-{{-- ================= CATEGORIES ================= --}}
-<div class="categories">
-    @forelse($categories as $category)
-        <a href="{{ route('product.index', ['category' => $category->slug]) }}" class="category-card">
-            <img src="{{ asset($category->image ?? 'images/default-category.png') }}" alt="{{ $category->name }}">
-            <h4>{{ $category->name }}</h4>
-        </a>
-    @empty
-        <p class="text-center">No categories available right now.</p>
-    @endforelse
-</div>
-
-
-
-{{-- ================= NEW ARRIVALS ================= --}}
-<section class="new-arrivals">
-    <h2>Our New Products</h2>
-    <p>Check out our latest auto parts and accessories</p>
-    <div class="product-grid">
-        @forelse ($newArrivals as $product)
-            <div class="product-card">
-                <a href="{{ route('products.view', $product->slug) }}">
-                    <img src="{{ asset($product->thumbnail ?? 'images/default.jpg') }}" alt="{{ $product->name }}">
-                    <h3>{{ Str::limit($product->name, 40) }}</h3>
-                </a>
-                <div class="stars">★★★★☆</div>
-                <p class="price">
-                    @if($product->discount_price)
-                        <span class="old-price">${{ number_format($product->price,2) }}</span>
-                        <span class="new-price">${{ number_format($product->discount_price,2) }}</span>
-                    @else
-                        ${{ number_format($product->price,2) }}
+            <!-- TEXT AREA -->
+            <div class="flex-1">
+                @if ($sliders->count() > 0)
+                    @php $firstSlider = $sliders->first(); @endphp
+                    @if ($firstSlider->title)
+                        <span class="text-blue-500 font-mono tracking-[0.3em] uppercase text-sm">
+                            Now Available
+                        </span>
+                        <h3 id="heroTitle" class="text-5xl md:text-7xl font-black mb-4 leading-none">
+                            {{ $firstSlider->title }}
+                        </h3>
                     @endif
-                </p>
-                <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn btn-orange open-cart">ADD TO CART</button>
-                </form>
-            </div>
-        @empty
-            <p>No products found.</p>
-        @endforelse
-    </div>
-</section>
 
-{{-- ================= BRANDS CAROUSEL ================= --}}
-<section class="brands">
-    <div class="container">
-        <h2 class="section-title">Our Brands</h2>
-        <p class="section-title-p">Check out our latest auto parts and accessories</p>
+                    @if ($firstSlider->subtitle)
+                        <p id="heroSubtitle" class="text-gray-400 text-lg md:text-xl max-w-md">
+                            {{ $firstSlider->subtitle }}
+                        </p>
+                    @endif
 
-        <div class="carousel-wrapper">
-            <div class="carousel">
-                @foreach ($brands as $brand)
-                    <div class="card">
-                        <img src="{{ $brand->logo ? asset($brand->logo) : 'https://via.placeholder.com/80' }}" alt="{{ $brand->name }}">
-                        <h4>{{ $brand->name }}</h4>
-                    </div>
-                @endforeach
-                {{-- Duplicate for smooth scroll --}}
-                @foreach ($brands as $brand)
-                    <div class="card">
-                        <img src="{{ $brand->logo ? asset($brand->logo) : 'https://via.placeholder.com/80' }}" alt="{{ $brand->name }}">
-                        <h4>{{ $brand->name }}</h4>
-                    </div>
-                @endforeach
+                    <button class="mt-8 bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-full font-bold transition">
+                        Explore 3D Build
+                    </button>
+                @endif
             </div>
+
+            <!-- SLIDER IMAGE -->
+            <div class="flex-none relative ">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg w-full h-full">
+                    <div class="slider flex transition-transform duration-500 ease-in-out h-full">
+                        @foreach ($sliders as $slider)
+                            <div class="slide flex-shrink-0 w-full h-full" data-title="{{ $slider->title }}"
+                                data-subtitle="{{ $slider->subtitle }}">
+                                <img src="{{ asset($slider->image) }}" alt="{{ $slider->title }}">
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <button
+                        class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full prev-btn">
+                        &#10094;
+                    </button>
+                    <button
+                        class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full next-btn">
+                        &#10095;
+                    </button>
+
+                    <!-- DOTS -->
+                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 dots"></div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</section>
+    </section>
+
+    {{-- ================= CATEGORIES ================= --}}
+    <section class="flex-col justify-center py-20">
+        <h2 class="text-4xl font-bold mb-12 border-l-4 border-blue-500 pl-6 uppercase tracking-tighter">
+            Product Categories
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+            @forelse($categories as $category)
+                <a href="{{ route('product.index', ['category' => $category->slug]) }}"
+                    class="glass p-8 rounded-3xl group hover:bg-white/5 transition cursor-pointer">
+                    <div
+                        class="h-32 mb-6 bg-blue-500/10 rounded-2xl flex items-center justify-center group-hover:scale-105 transition overflow-hidden">
+                        <img src="{{ asset($category->image ?? 'images/default-category.png') }}"
+                            alt="{{ $category->name }}"
+                            class="h-full w-full object-cover opacity-90 group-hover:scale-110 transition duration-500">
+                    </div>
+                    <h3 class="text-xl font-bold">{{ $category->name }}</h3>
+                    <p class="text-gray-500 text-sm mt-2">Explore our {{ $category->name }} collection.</p>
+                </a>
+            @empty
+                <p class="text-center col-span-3 text-gray-500">No categories available right now.</p>
+            @endforelse
+        </div>
+    </section>
+
+    {{-- ================= NEW PRODUCTS ================= --}}
+    <section class="flex-col justify-center items-center py-20">
+        <div class="text-center mb-16">
+            <h2 class="text-5xl font-black uppercase tracking-tighter italic">
+                Our New <span
+                    class="text-gradient bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">Products</span>
+            </h2>
+            <p class="text-gray-500 mt-4 tracking-widest font-mono text-sm uppercase">
+                Engineered for the Next Gen
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-7xl">
+            @forelse ($newArrivals as $product)
+                <div
+                    class="product-card glass p-6 rounded-[2rem] transition duration-500 flex flex-col items-center text-center">
+                    <div
+                        class="w-full aspect-square bg-gradient-to-b from-blue-500/20 to-transparent rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
+                        <a href="{{ route('products.view', $product->slug) }}">
+                            <img src="{{ asset($product->thumbnail ?? 'images/default.jpg') }}" alt="{{ $product->name }}"
+                                class="opacity-80 hover:scale-110 transition duration-500">
+                        </a>
+                    </div>
+                    <a href="{{ route('products.view', $product->slug) }}">
+                        <h4 class="text-lg font-bold">{{ Str::limit($product->name, 40) }}</h4>
+                    </a>
+                    <p class="text-blue-400 font-mono text-sm mb-4">
+                        @if ($product->discount_price)
+                            <span class="line-through text-gray-400 mr-2">${{ number_format($product->price, 2) }}</span>
+                            ${{ number_format($product->discount_price, 2) }}
+                        @else
+                            ${{ number_format($product->price, 2) }}
+                        @endif
+                    </p>
+                    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-full">
+                        @csrf
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit"
+                            class="w-full py-3 bg-white/10 hover:bg-white hover:text-black rounded-xl transition text-xs font-bold uppercase tracking-widest border border-white/10">
+                            Add to Cart
+                        </button>
+                    </form>
+                </div>
+            @empty
+                <p class="text-center col-span-4 text-gray-500">No products found.</p>
+            @endforelse
+        </div>
+    </section>
+
+    {{-- ================= BRANDS CAROUSEL ================= --}}
+    <section class="flex-col h-auto py-32 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent">
+        <p class="text-center text-gray-500 uppercase tracking-[0.5em] text-xs mb-16">
+            Global Manufacturing Partners
+        </p>
+        <div
+            class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-30 grayscale hover:opacity-100 transition duration-700">
+            @foreach ($brands as $brand)
+                <div class="flex flex-col items-center">
+                    <img src="{{ $brand->logo ? asset($brand->logo) : 'https://via.placeholder.com/80' }}"
+                        alt="{{ $brand->name }}" class="h-12 mb-2 object-contain">
+                    <span class="text-4xl font-black italic tracking-tighter">{{ $brand->name }}</span>
+                </div>
+            @endforeach
+        </div>
+    </section>
 @endsection
 
 @section('scripts')
-<script>
-const slides = document.querySelectorAll('.slide');
-const dotsContainer = document.getElementById('sliderDots');
-let current = 0;
+    <script>
+        // --- THREE.JS ENGINE ---
+        let scene, camera, renderer, product;
+        let scrollY = window.scrollY;
 
-// Create dots
-slides.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.addEventListener('click', () => goToSlide(i));
-    dotsContainer.appendChild(dot);
-});
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const dots = document.querySelectorAll('#sliderDots span');
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-function showSlide(i) {
-    slides.forEach(s => s.classList.remove('active'));
-    dots.forEach(d => d.classList.remove('active'));
-    slides[i].classList.add('active');
-    dots[i].classList.add('active');
-}
+            const geometry = new THREE.IcosahedronGeometry(2, 0);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: 0x3b82f6,
+                wireframe: true,
+                roughness: 0.1,
+                metalness: 0.8
+            });
+            product = new THREE.Group();
+            const mesh = new THREE.Mesh(geometry, material);
+            product.add(mesh);
+            scene.add(product);
 
-function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
-function prevSlide() { current = (current - 1 + slides.length) % slides.length; showSlide(current); }
-function goToSlide(i) { current = i; showSlide(current); }
+            const light1 = new THREE.PointLight(0x6366f1, 15);
+            light1.position.set(5, 5, 5);
+            scene.add(light1);
 
-setInterval(nextSlide, 5000);
-document.querySelector('.next-btn').addEventListener('click', nextSlide);
-document.querySelector('.prev-btn').addEventListener('click', prevSlide);
-showSlide(current);
-</script>
+            const light2 = new THREE.PointLight(0xa855f7, 10);
+            light2.position.set(-5, -5, 5);
+            scene.add(light2);
+
+            camera.position.z = 6;
+        }
+
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            const sectionHeight = window.innerHeight;
+
+            if (scrollY < sectionHeight) {
+                product.position.x = (scrollY / sectionHeight) * 2;
+                product.scale.set(1, 1, 1);
+            } else if (scrollY >= sectionHeight && scrollY < sectionHeight * 2) {
+                product.position.x = 2 - ((scrollY - sectionHeight) / sectionHeight) * 4;
+                product.rotation.z = (scrollY / sectionHeight);
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            product.rotation.y += 0.005;
+            product.rotation.x += 0.002;
+            product.position.y = scrollY * 0.0005;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        init();
+        animate();
+    </script>
+
+    <script>
+        // --- HERO SLIDER ---
+        const heroSlider = document.querySelector('.slider');
+        const heroSlides = heroSlider.children;
+        const nextBtn = document.querySelector('.next-btn');
+        const prevBtn = document.querySelector('.prev-btn');
+        const dotsContainer = document.querySelector('.dots');
+
+        const heroTitle = document.getElementById('heroTitle');
+        const heroSubtitle = document.getElementById('heroSubtitle');
+        let currentIndex = 0;
+
+        function updateText(index) {
+            const slide = heroSlides[index];
+            heroTitle.innerHTML = slide.dataset.title +
+                ' <span class="text-gradient bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">V9</span>';
+            heroSubtitle.innerHTML = slide.dataset.subtitle ? slide.dataset.subtitle +
+                " The world's first spatial audio headset rendered in real-time 3D." : '';
+        }
+
+        for (let i = 0; i < heroSlides.length; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('w-3', 'h-3', 'bg-white', 'rounded-full', 'opacity-50', 'cursor-pointer');
+            if (i === 0) dot.classList.add('opacity-100');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        const dots = dotsContainer.children;
+
+        function goToSlide(index) {
+            heroSlider.style.transform = `translateX(-${index*100}%)`;
+            dots[currentIndex].classList.remove('opacity-100');
+            dots[currentIndex].classList.add('opacity-50');
+            currentIndex = index;
+            dots[currentIndex].classList.add('opacity-100');
+            dots[currentIndex].classList.remove('opacity-50');
+            updateText(index);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            let next = (currentIndex + 1) % heroSlides.length;
+            goToSlide(next);
+        });
+
+        prevBtn.addEventListener('click', () => {
+            let prev = (currentIndex - 1 + heroSlides.length) % heroSlides.length;
+            goToSlide(prev);
+        });
+
+        setInterval(() => {
+            nextBtn.click();
+        }, 5000);
+        updateText(0);
+    </script>
 @endsection
